@@ -29,20 +29,35 @@ Point2f RotatePoint(const Point2f &cen_pt, const Point2f &p, float rad) {
   return fin_pt;
 }
 
+struct Polygon {
+  string name;
+  vector<Point2f> points;
+};
+void print_polygon(const Polygon &polygon) {
+  for (Point2f pt : polygon.points) {
+    cout << pt << ' ';
+  }
+  cout << endl;
+}
+void modify_polygon_by_reference(Polygon &polygon) {
+  print_polygon(polygon);
+  for (Point2f pt : polygon.points) {
+    cout << pt.x << ' ';
+    pt.x = 1;
+    cout << pt.x << ' ';
+  }
+  print_polygon(polygon);
+}
+
 int main(int argc, char **argv) {
   Point2f p1(0, 4);
   Point2f p2(4, 0);
   Point2f p3(4, 4);
-
-  float x = 0;
-  float y = 0;
-  float rad = 1.5708;
-  Point2f origin(x, y);
-
-  cout << p1 << " x " << origin << " (rad=" << rad << ") => "
-       << RotatePoint(origin, p1, rad) << endl;
-  cout << p2 << " x " << origin << " (rad=" << rad << ") => "
-       << RotatePoint(origin, p2, rad) << endl;
-  cout << p3 << " x " << origin << " (rad=" << rad << ") => "
-       << RotatePoint(origin, p3, rad) << endl;
+  Polygon polygon;
+  polygon.points.push_back(p1);
+  polygon.points.push_back(p2);
+  polygon.points.push_back(p3);
+  print_polygon(polygon);
+  modify_polygon_by_reference(polygon);
+  print_polygon(polygon);
 }
